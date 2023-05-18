@@ -31,7 +31,7 @@
 *.out
 *.app
 
-# Duild directory
+# Build directory
 build*
 
 # Configuration
