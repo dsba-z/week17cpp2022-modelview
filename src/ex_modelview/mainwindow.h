@@ -23,5 +23,7 @@ private:
     Ui::MainWindow* ui;
 
     ExampleModel* _model;
+private slots:
+    void openFile();
 };
 #endif// MAINWINDOW_H
