@@ -18,6 +18,8 @@ set(PROJECT_SOURCES
         ex_modelview/main.cpp
         ex_modelview/mainwindow.cpp
         ex_modelview/mainwindow.h
+        ex_modelview/examplemodel.cpp
+        ex_modelview/examplemodel.h
         ex_modelview/mainwindow.ui
 )
 
