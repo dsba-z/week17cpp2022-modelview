@@ -127,7 +127,7 @@ Finally, `data`, the most important function here. It returns data at a particul
 
 The `index` variable has methods `index.row()` and `index.column()` to get a row and column you need. You can use them to access your table like this: `exampleData.at(row).at(column)`.
 
-`role` in the function `data` is a special parameter that controls which aspect of data you access. There is `Qt::DisplayRole` which is data itself, a string, specifically for display purposes. There are also other roles. `Qt::EditRole` is what appears in the data when you start changing it, `Qt::ToolTipRole` is the text that appears in a tooltip when you hover your cursor over data, `Qt::BackgroundRole` is the color of the background in the cell displaying data, and so on.
+`role` in the function `data` is a special parameter that controls which aspect of data you access. There is `Qt::DisplayRole` which is data itself, a string, specifically for display purposes. There are other roles. `Qt::EditRole` is what appears in the data when you start changing it, `Qt::ToolTipRole` is the text that appears in a tooltip when you hover your cursor over data, `Qt::BackgroundRole` is the color of the background in the cell displaying data, and so on.
 
 Explanation of roles: https://doc.qt.io/qt-6/modelview.html#2-2-extending-the-read-only-example-with-roles
 
