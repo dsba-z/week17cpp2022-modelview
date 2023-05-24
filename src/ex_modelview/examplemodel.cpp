@@ -5,6 +5,31 @@
 ExampleModel::ExampleModel(QObject* parent)
     : QAbstractTableModel(parent)
 {
+    _header.append("ID");
+    _header.append("Survived");
+    _header.append("PClass");
+    _header.append("Name");
+    _header.append("Sex");
+    _header.append("Age");
+    _header.append("SibSp");
+    _header.append("Parch");
+    _header.append("Ticket");
+    _header.append("Fare");
+    _header.append("Cabin");
+    _header.append("Embarked");
+
+}
+
+QVariant ExampleModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (orientation == Qt::Horizontal)
+    {
+        if (role == Qt::DisplayRole)
+        {
+            return _header[section];
+        }
+    }
+    return QVariant();
 }
 
 int ExampleModel::rowCount(const QModelIndex& parent) const
@@ -21,7 +46,7 @@ int ExampleModel::columnCount(const QModelIndex& parent) const
     if (parent.isValid())
         return 0;
 
-    return 5;
+    return _header.size();
 }
 
 QVariant ExampleModel::data(const QModelIndex& index, int role) const
@@ -77,8 +102,9 @@ bool ExampleModel::reloadDataFromFile(const QString& path)
     }
     QTextStream inputStream(&inputFile);
 
-
+    // header
     QString firstline = inputStream.readLine();
+    // _header = firstline.split(",");
 
     while (!inputStream.atEnd())
     {
@@ -110,6 +136,34 @@ bool ExampleModel::reloadDataFromFile(const QString& path)
     return true;
 }
 
+bool ExampleModel::saveDataToFile(const QString& path)
+{
+
+    QFile outputFile(path);
+    if (!outputFile.open(QFile::WriteOnly | QFile::Text))
+    {
+        return false;
+    }
+    QTextStream outputStream(&outputFile);
+
+
+
+    for (const QList<QVariant>& row: _data)
+    {
+        bool first = true;
+        for (const QVariant& item: row)
+        {
+            if (!first)
+            {
+                outputStream << ",";
+            }
+            outputStream << item.toString();
+            first = false;
+        }
+    }
+    return true;
+}
+
 void ExampleModel::appendRow(const QList<QVariant>& newRow)
 {
     beginInsertRows(QModelIndex(), _data.size(), _data.size());
@@ -118,9 +172,14 @@ void ExampleModel::appendRow(const QList<QVariant>& newRow)
 }
 
 
-void ExampleModel::removeRow(int rowIndex)
+bool ExampleModel::removeRow(int rowIndex)
 {
+    if (rowIndex >= _data.size())
+    {
+        return false;
+    }
     beginRemoveRows(QModelIndex(), rowIndex, rowIndex);
     _data.removeAt(rowIndex);
     endRemoveRows();
+    return true;
 }

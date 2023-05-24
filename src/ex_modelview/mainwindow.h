@@ -23,9 +23,12 @@ private slots:
     void openDataFile();
     void openAddRowDialog();
     void removeModelRow();
+    void highlightDataItem(const QModelIndex& index);
 
 private:
     Ui::MainWindow* ui;
     ExampleModel* _model;
+
+    QString _currentFolder;
 };
 #endif// MAINWINDOW_H

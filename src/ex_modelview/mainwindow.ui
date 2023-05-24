@@ -15,6 +15,19 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="2" column="2">
+     <widget class="QSpinBox" name="spinBoxRemove"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="pushButtonAddRow">
+      <property name="text">
+       <string>Add Row</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1" colspan="2">
+     <widget class="QTableView" name="tableView"/>
+    </item>
     <item row="0" column="0">
      <widget class="QListView" name="listView">
       <property name="sizePolicy">
@@ -37,25 +50,203 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item row="2" column="1">
      <widget class="QPushButton" name="pushButtonRemoveRow">
       <property name="text">
        <string>Remove Row</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="pushButtonAddRow">
-      <property name="text">
-       <string>Add Row</string>
+    <item row="0" column="3">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string>Passenger profile</string>
       </property>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="labelId">
+         <property name="text">
+          <string>ID:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="labelIdData">
+         <property name="text">
+          <string>_</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="labelName">
+         <property name="text">
+          <string>Name:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="labelNameData">
+         <property name="text">
+          <string>_</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelSurvived">
+         <property name="text">
+          <string>Survived</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="labelSurvivedData">
+         <property name="text">
+          <string>_</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="labelPclass">
+         <property name="text">
+          <string>PClass</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="labelPclassData">
+         <property name="text">
+          <string>_</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="labelAge">
+         <property name="text">
+          <string>Age</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="labelAgeData">
+         <property name="text">
+          <string>_</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="labelSex">
+         <property name="text">
+          <string>Sex</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="labelSexData">
+         <property name="text">
+          <string>_</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="labelSibSp">
+         <property name="text">
+          <string>SibSp</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLabel" name="labelSibSpData">
+         <property name="text">
+          <string>_</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="labeParch">
+         <property name="text">
+          <string>Parch</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLabel" name="labelParchData">
+         <property name="text">
+          <string>_</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="labelTicket">
+         <property name="text">
+          <string>Ticket</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLabel" name="labelTicketData">
+         <property name="text">
+          <string>_</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="labelFare">
+         <property name="text">
+          <string>Fare</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QLabel" name="labelFareData">
+         <property name="text">
+          <string>_</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="labelCabin">
+         <property name="text">
+          <string>Cabin</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QLabel" name="labelCabinData">
+         <property name="text">
+          <string>_</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0">
+        <widget class="QLabel" name="labelEmbarked">
+         <property name="text">
+          <string>Embarked</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1">
+        <widget class="QLabel" name="labelEmbarkedData">
+         <property name="text">
+          <string>_</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="1">
+        <widget class="QPushButton" name="pushButtonRemoveRow_2">
+         <property name="text">
+          <string>Edit</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="0">
+        <widget class="QPushButton" name="pushButtonRemoveRow_4">
+         <property name="text">
+          <string>Remove</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
-    </item>
-    <item row="1" column="2">
-     <widget class="QSpinBox" name="spinBoxRemove"/>
-    </item>
-    <item row="0" column="1" colspan="2">
-     <widget class="QTableView" name="tableView"/>
     </item>
    </layout>
   </widget>
