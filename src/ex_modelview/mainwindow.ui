@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>670</width>
-    <height>538</height>
+    <height>577</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,18 +15,46 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="2">
-     <widget class="QSpinBox" name="spinBoxRemove"/>
-    </item>
-    <item row="2" column="0">
+    <item row="3" column="0">
      <widget class="QPushButton" name="pushButtonAddRow">
       <property name="text">
        <string>Add Row</string>
       </property>
      </widget>
     </item>
+    <item row="4" column="3">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Max age</string>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="1" colspan="2">
      <widget class="QTableView" name="tableView"/>
+    </item>
+    <item row="3" column="1">
+     <widget class="QPushButton" name="pushButtonRemoveRow">
+      <property name="text">
+       <string>Remove Row</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Min age</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QSpinBox" name="spinBoxRemove"/>
+    </item>
+    <item row="1" column="5">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </item>
     <item row="0" column="0">
      <widget class="QListView" name="listView">
@@ -50,14 +78,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
-     <widget class="QPushButton" name="pushButtonRemoveRow">
-      <property name="text">
-       <string>Remove Row</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="3">
+    <item row="0" column="3" colspan="3">
      <widget class="QGroupBox" name="groupBox">
       <property name="title">
        <string>Passenger profile</string>
@@ -232,9 +253,9 @@
         </widget>
        </item>
        <item row="12" column="1">
-        <widget class="QPushButton" name="pushButtonRemoveRow_2">
+        <widget class="QPushButton" name="minAgeButton">
          <property name="text">
-          <string>Edit</string>
+          <string>Set Min Age</string>
          </property>
         </widget>
        </item>
@@ -246,6 +267,34 @@
         </widget>
        </item>
       </layout>
+     </widget>
+    </item>
+    <item row="1" column="4">
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="4">
+     <widget class="QLineEdit" name="lineEdit_2">
+      <property name="text">
+       <string>30</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="3" colspan="2">
+     <widget class="QSlider" name="horizontalSlider_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3" colspan="2">
+     <widget class="QSlider" name="horizontalSlider">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
      </widget>
     </item>
    </layout>

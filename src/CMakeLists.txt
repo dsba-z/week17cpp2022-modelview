@@ -21,9 +21,14 @@ set(PROJECT_SOURCES
         ex_modelview/mainwindow.ui
         ex_modelview/examplemodel.cpp
         ex_modelview/examplemodel.h
+        ex_modelview/myproxy.cpp
+        ex_modelview/myproxy.h
         ex_modelview/addrowdialog.cpp
         ex_modelview/addrowdialog.h
         ex_modelview/addrowdialog.ui
+        ex_modelview/aboutdialog.cpp
+        ex_modelview/aboutdialog.h
+        ex_modelview/aboutdialog.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
