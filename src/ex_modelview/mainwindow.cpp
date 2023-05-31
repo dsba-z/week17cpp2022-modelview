@@ -21,8 +21,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::openFile()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), ".");
-    // _model->getDataFromFile(fileName);
+    // QFileDialog* fdialog = new QFileDialog(this);
+    // fdialog.open();
+
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), ".", "*.csv");
+    _model->loadDataFromFile("../data/titanic.csv");
 }
 
 MainWindow::~MainWindow()

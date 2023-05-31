@@ -1,17 +1,48 @@
 #include "examplemodel.h"
+#include <QFile>
+#include <QTextStream>
+
 
 ExampleModel::ExampleModel(QObject *parent)
     : QAbstractTableModel(parent)
 {
-    for (int i = 0; i < 10; ++i)
+    // for (int i = 0; i < 10; ++i)
+    // {
+    //     QList<QVariant> newRow;
+    //     for (int j = 0; j < 5; ++j)
+    //     {
+    //         newRow.push_back(2);
+    //     }
+    //     _data.push_back(newRow);
+    // }
+}
+
+bool ExampleModel::loadDataFromFile(const QString& path)
+{
+    QList<QList<QVariant>> newData;
+
+    QFile inputFile(path);
+    inputFile.open(QFile::ReadOnly | QFile::Text);
+    QTextStream inputStream(&inputFile);
+
+    QString firstline = inputStream.readLine();
+
+    // inputStream >> a;
+    while(!inputStream.atEnd())
     {
-        QList<QVariant> newRow;
-        for (int j = 0; j < 5; ++j)
-        {
-            newRow.push_back(2);
+        QString line = inputStream.readLine();
+        
+        QList<QVariant> dataRow;
+        for (const QString& item : line.split(",")) {
+            dataRow.append(item);
         }
-        _data.push_back(newRow);
+        newData.append(dataRow);
     }
+    inputFile.close();
+    
+    beginResetModel();
+    _data = newData;
+    endResetModel();
 }
 
 int ExampleModel::rowCount(const QModelIndex &parent) const
