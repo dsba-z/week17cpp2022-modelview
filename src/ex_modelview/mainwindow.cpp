@@ -4,7 +4,9 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QSlider>
 
+const int NAME_COLUMN = 3;
 
 QString loadCurrentFolderFromFile()
 {
@@ -29,6 +31,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     ui->tableView->setModel(_proxy);
     ui->tableView->setSortingEnabled(true);
+    ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     // ui->tableView->hideColumn(0);
     ui->tableView->hideColumn(1);
@@ -49,42 +52,58 @@ MainWindow::MainWindow(QWidget* parent)
     QObject::connect(ui->pushButtonRemoveRow, &QPushButton::clicked, this, &MainWindow::removeModelRow);
     QObject::connect(ui->listView, &QAbstractItemView::clicked, this, &MainWindow::highlightDataItem);
     QObject::connect(ui->tableView, &QAbstractItemView::clicked, this, &MainWindow::highlightDataItem);
-    QObject::connect(ui->minAgeButton, &QPushButton::clicked, this, &MainWindow::setMinFilterAge);
+
+    QObject::connect(ui->minAgeSlider, &QSlider::valueChanged, this, &MainWindow::setMinFilterAge);
+    QObject::connect(ui->minAgeLineEdit, &QLineEdit::textChanged, this, &MainWindow::setMinFilterAgeString);
+
+    QObject::connect(ui->lineEditName, &QLineEdit::textChanged, this, &MainWindow::setName);
+
+    QItemSelectionModel *selectionModel = ui->tableView->selectionModel();
+    QObject::connect(selectionModel, &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowChangedSlot);
+
+
+    QObject::connect(ui->addButton, &QPushButton::clicked, this, &MainWindow::addButtonSlot);
 
     _currentFolder = loadCurrentFolderFromFile();
 }
 
-
-void MainWindow::setMinFilterAge()
+void MainWindow::addButtonSlot()
 {
-    int newMinAge = ui->lineEdit->text().toInt();
-    _proxy->setMinAge(newMinAge);
+    QPushButton* newButton = new QPushButton(ui->scrollArea);
+
+    _extraButtons.append(newButton); 
+    newButton->setText(QString::number(_extraButtons.size()));
+
+    ui->scrollAreaWidgetContents->layout()->addWidget(newButton);
+    QObject::connect(newButton, &QPushButton::clicked, this, &MainWindow::addButtonSlot);
 }
-// bool MySortFilterProxyModel::lessThan(const QModelIndex &left,
-//                                       const QModelIndex &right) const
-// {
-//     QVariant leftData = sourceModel()->data(left);
-//     QVariant rightData = sourceModel()->data(right);
-//     return leftData < rightData;
-// }
 
-// bool MySortFilterProxyModel::filterAcceptsRow(int sourceRow,
-//                                               const QModelIndex &sourceParent) const
-// {
-//     QModelIndex index0 = sourceModel()->index(sourceRow, 0, sourceParent);
-//     QModelIndex index1 = sourceModel()->index(sourceRow, 1, sourceParent);
-//     QModelIndex index2 = sourceModel()->index(sourceRow, 2, sourceParent);
+void MainWindow::rowChangedSlot(QModelIndex current, QModelIndex previous)
+{
+    highlightDataItem(current);
+}
 
-//     return (sourceModel()->data(index0).toString().contains(filterRegularExpression())
-//             || sourceModel()->data(index1).toString().contains(filterRegularExpression()))
-//             && dateInRange(sourceModel()->data(index2).toDate());
-// }
-QString extractDir(QString file)
+void MainWindow::setMinFilterAge(int value)
+{
+    // int newMinAge = ui->lineEdit->text().toInt();
+    
+    ui->minAgeLineEdit->setText(QString::number(value));
+    _proxy->setMinAge(value);
+}
+
+void MainWindow::setMinFilterAgeString(QString value)
+{    
+    // ui->minAgeLineEdit->setText(value);
+    ui->minAgeSlider->setValue(value.toInt());
+    _proxy->setMinAge(value.toInt());
+}
+
+QString extractDir(const QString& file)
 {
     return file;
 }
 
-void saveCurrentFolderToFile(QString _currentFolder)
+void saveCurrentFolderToFile(const QString& _currentFolder)
 {
     QFile outputFile("./settings_file.txt");
     if (!outputFile.open(QFile::WriteOnly | QFile::Text))
@@ -108,7 +127,7 @@ void MainWindow::openDataFile()
     }
 
     QString fileName = QFileDialog::getOpenFileName(this, "Open data file", _currentFolder, "*.csv");
-    QMessageBox::warning(this, "Error", fileName, QMessageBox::Ok);
+    // QMessageBox::warning(this, "Error", fileName, QMessageBox::Ok);
 
     _currentFolder = extractDir(fileName);
     saveCurrentFolderToFile(_currentFolder);
@@ -123,10 +142,10 @@ void MainWindow::openDataFile()
 void MainWindow::highlightDataItem(const QModelIndex& clickIndex)
 {
     int row = clickIndex.row();
-    QModelIndex index = _model->index(row, 3);
-    ui->labelNameData->setText(_model->data(index).toString());
-    index = _model->index(row, 1);
-    ui->labelSurvivedData->setText(_model->data(index).toString());
+    QModelIndex index = _proxy->index(row, 3);
+    ui->lineEditName->setText(_proxy->data(index).toString());
+    index = _proxy->index(row, 1);
+    ui->labelSurvivedData->setText(_proxy->data(index).toString());
 }
 
 
@@ -136,21 +155,47 @@ void MainWindow::openAddRowDialog()
     if (dialog.exec())
     {
         QList<QVariant> dataRow = dialog.getDataRow();
+        // _model->setData(row, 0, dataRow[0]);
+        // _model->setData(row, 1, dataRow[1]);
         _model->appendRow(dataRow);
     }
 }
 
 void MainWindow::removeModelRow()
 {
-    int rowIndex = ui->spinBoxRemove->value();
-    // QModelIndex removeIndex = ui->listView->currentIndex();
-    // int rowToRemove = removeIndex.row();
+    // int rowIndex = ui->spinBoxRemove->value();
+    QModelIndex removeIndex = ui->listView->currentIndex();
+    int rowToRemove = removeIndex.row();
+
     
-    if (!_model->removeRow(rowIndex))
+    
+    if (!_model->removeRow(rowToRemove))
     {
         QMessageBox::warning(this, "Error", "Incorrect index (doesn't exist)", QMessageBox::Ok);
     }
 }
+
+
+// void MainWindow::setName(QString newText)
+// {
+//     QModelIndex currentItemProxy = ui->tableView->currentIndex();
+//     QModelIndex currentItem = _proxy->mapToSource(currentItemProxy);
+//     _model->setData(currentItem, newText);
+// }
+
+void MainWindow::setName(QString newText)
+{
+    QModelIndex currentItem = ui->tableView->currentIndex();
+    int row = currentItem.row();
+
+    QModelIndex nameItemProxy = _proxy->index(row, NAME_COLUMN);
+    // _proxy->setData(nameItemProxy, newText);
+
+    QModelIndex nameItemOriginal = _proxy->mapToSource(nameItemProxy);
+
+    _model->setData(nameItemOriginal, newText);
+}
+
 
 MainWindow::~MainWindow()
 {

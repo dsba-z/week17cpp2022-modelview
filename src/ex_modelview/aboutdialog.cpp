@@ -7,8 +7,24 @@ AboutDialog::AboutDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    _logo = new QLabel(ui->widgetLogoContainer);
-    _logo->setText("Logo text");
+    _logo = new CustomWidget(ui->widgetLogoContainer);
+
+    QHBoxLayout* hboxLayout;
+    hboxLayout = new QHBoxLayout(ui->widgetLogoContainer);
+    ui->widgetLogoContainer->setLayout(hboxLayout);
+    hboxLayout->addWidget(_logo);
+
+    
+    QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    sizePolicy.setHorizontalStretch(0);
+    sizePolicy.setVerticalStretch(0);
+    sizePolicy.setHeightForWidth(_logo->sizePolicy().hasHeightForWidth());
+    _logo->setSizePolicy(sizePolicy);
+
+    // ui->horizontalLayout->addWidget(_logo);
+    // ui->horizontalLayout->removeWidget(ui->label);
+
+
 }
 
 AboutDialog::~AboutDialog()

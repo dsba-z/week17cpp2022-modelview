@@ -2,7 +2,7 @@
 #define ABOUTDIALOG_H
 
 #include <QDialog>
-#include <QLabel>
+#include "customwidget.h"
 
 namespace Ui
 {
@@ -21,7 +21,7 @@ public:
 
 private:
     Ui::AboutDialog* ui;
-    QLabel* _logo;
+    CustomWidget* _logo;
 };
 
 #endif// ABOUTDIALOG_H

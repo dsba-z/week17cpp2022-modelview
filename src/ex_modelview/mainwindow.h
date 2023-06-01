@@ -28,7 +28,13 @@ private slots:
     void highlightDataItem(const QModelIndex& index);
     void showAboutDialog();
 
-    void setMinFilterAge();
+    void setMinFilterAge(int value);
+    void setMinFilterAgeString(QString value);
+    void rowChangedSlot(QModelIndex current, QModelIndex previous);
+
+    void setName(QString newText);
+
+    void addButtonSlot();
 
 private:
     MyProxy* _proxy;
@@ -38,5 +44,6 @@ private:
     AboutDialog* _aboutDialog;
 
     QString _currentFolder;
+    QList<QWidget*> _extraButtons;
 };
 #endif// MAINWINDOW_H

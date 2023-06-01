@@ -73,10 +73,14 @@ bool ExampleModel::setData(const QModelIndex& index, const QVariant& value, int 
     {
         int row = index.row();
         int column = index.column();
-        _data[row][column] = value;
-
-        emit dataChanged(index, index, {role});
-        return true;
+        if (0 <= row && row < rowCount() && 0 <= column && columnCount())
+        {
+            _data[row][column] = value;
+            emit dataChanged(index, index, {role});
+            return true;
+        }
+        
+        return false;
     }
     return false;
 }

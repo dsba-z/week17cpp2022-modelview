@@ -17,6 +17,7 @@ public:
 private:
     int _minAge;
     int _maxAge;
+    bool _ageFilterEnabled;
 };
 
 #endif // MYPROXY_H
