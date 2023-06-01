@@ -119,7 +119,7 @@ bool ExampleModel::reloadDataFromFile(const QString& path)
         for (int i = 0; i < items.size(); ++i)
         {
             QVariant value;
-            if (i == 0)
+            if (i == 0 || i == 5)
             {
                 value = items[i].toInt();
             }

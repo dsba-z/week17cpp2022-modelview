@@ -9,10 +9,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
 
     _logo = new CustomWidget(ui->widgetLogoContainer);
 
-    QHBoxLayout* hboxLayout;
-    hboxLayout = new QHBoxLayout(ui->widgetLogoContainer);
-    ui->widgetLogoContainer->setLayout(hboxLayout);
-    hboxLayout->addWidget(_logo);
+    ui->horizontalLayout->addWidget(_logo);
 
     
     QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -29,21 +26,6 @@ AboutDialog::AboutDialog(QWidget *parent) :
 
 AboutDialog::~AboutDialog()
 {
-    // delete ui;
+    delete ui;
 }
 
-
-// QList<QVariant> AboutDialog::getDataRow()
-// {
-//     // QList<QVariant> dataRow;
-//     // dataRow.append(1);
-//     // dataRow.append(bool(ui->checkBoxSurvived->checkState()));
-//     // dataRow.append(ui->comboBoxPClass->currentText().toInt());
-//     // dataRow.append(ui->lineEditName->text());
-//     // dataRow.append(ui->spinBoxAge->value());
-//     // additional data checks
-//     // return success / failure
-//     // throw an exception
-
-//     return dataRow;
-// }

@@ -38,6 +38,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
+
+find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
+
+qt6_add_translations(ex_modelview
+    TS_FILES ex_modelview_ru.ts
+    QM_FILES_OUTPUT_VARIABLE qm_files)
+install(FILES ${qm_files} DESTINATION .)
+
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET ex_modelview APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)

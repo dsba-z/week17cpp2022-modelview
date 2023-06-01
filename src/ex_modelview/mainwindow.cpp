@@ -28,10 +28,11 @@ MainWindow::MainWindow(QWidget* parent)
     _aboutDialog = new AboutDialog(this);
     _proxy = new MyProxy(this);
     _proxy->setSourceModel(_model);
+    _translator = new QTranslator(this);
 
     ui->tableView->setModel(_proxy);
     ui->tableView->setSortingEnabled(true);
-    ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    // ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     // ui->tableView->hideColumn(0);
     ui->tableView->hideColumn(1);
@@ -43,36 +44,50 @@ MainWindow::MainWindow(QWidget* parent)
     ui->tableView->hideColumn(10);
     ui->tableView->hideColumn(11);
 
-    ui->listView->setModel(_model);
+    ui->listView->setModel(_proxy);
     ui->listView->setModelColumn(3);
 
     QObject::connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openDataFile);
     QObject::connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::showAboutDialog);
+    QObject::connect(ui->actionEnglish, &QAction::triggered, this, &MainWindow::translateEnglish);
+    QObject::connect(ui->actionRussian, &QAction::triggered, this, &MainWindow::translateRussian);
     QObject::connect(ui->pushButtonAddRow, &QPushButton::clicked, this, &MainWindow::openAddRowDialog);
     QObject::connect(ui->pushButtonRemoveRow, &QPushButton::clicked, this, &MainWindow::removeModelRow);
     QObject::connect(ui->listView, &QAbstractItemView::clicked, this, &MainWindow::highlightDataItem);
-    QObject::connect(ui->tableView, &QAbstractItemView::clicked, this, &MainWindow::highlightDataItem);
+    // QObject::connect(ui->tableView, &QAbstractItemView::clicked, this, &MainWindow::highlightDataItem);
 
     QObject::connect(ui->minAgeSlider, &QSlider::valueChanged, this, &MainWindow::setMinFilterAge);
     QObject::connect(ui->minAgeLineEdit, &QLineEdit::textChanged, this, &MainWindow::setMinFilterAgeString);
-
     QObject::connect(ui->lineEditName, &QLineEdit::textChanged, this, &MainWindow::setName);
 
+    // ui->listView->selectionModel
     QItemSelectionModel *selectionModel = ui->tableView->selectionModel();
     QObject::connect(selectionModel, &QItemSelectionModel::currentRowChanged, this, &MainWindow::rowChangedSlot);
-
 
     QObject::connect(ui->addButton, &QPushButton::clicked, this, &MainWindow::addButtonSlot);
 
     _currentFolder = loadCurrentFolderFromFile();
 }
 
+
+void MainWindow::translateEnglish()
+{
+    qApp->removeTranslator(_translator);
+    ui->retranslateUi(this);
+}
+
+void MainWindow::translateRussian()
+{
+    if (_translator->load("ex_modelview_ru"))
+        qApp->installTranslator(_translator);
+    ui->retranslateUi(this);
+}
+
 void MainWindow::addButtonSlot()
 {
     QPushButton* newButton = new QPushButton(ui->scrollArea);
-
     _extraButtons.append(newButton); 
-    newButton->setText(QString::number(_extraButtons.size()));
+    newButton->setText(tr("New button"));
 
     ui->scrollAreaWidgetContents->layout()->addWidget(newButton);
     QObject::connect(newButton, &QPushButton::clicked, this, &MainWindow::addButtonSlot);
@@ -129,7 +144,7 @@ void MainWindow::openDataFile()
     QString fileName = QFileDialog::getOpenFileName(this, "Open data file", _currentFolder, "*.csv");
     // QMessageBox::warning(this, "Error", fileName, QMessageBox::Ok);
 
-    _currentFolder = extractDir(fileName);
+    _currentFolder = fileName;
     saveCurrentFolderToFile(_currentFolder);
 
 
@@ -146,6 +161,9 @@ void MainWindow::highlightDataItem(const QModelIndex& clickIndex)
     ui->lineEditName->setText(_proxy->data(index).toString());
     index = _proxy->index(row, 1);
     ui->labelSurvivedData->setText(_proxy->data(index).toString());
+
+    index = _proxy->index(row, 2);
+    ui->labelPclassData->setText(_proxy->data(index).toString());
 }
 
 

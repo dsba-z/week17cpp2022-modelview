@@ -5,6 +5,7 @@
 #include "myproxy.h"
 #include "examplemodel.h"
 #include "aboutdialog.h"
+#include <QTranslator>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -35,6 +36,8 @@ private slots:
     void setName(QString newText);
 
     void addButtonSlot();
+    void translateEnglish();
+    void translateRussian();
 
 private:
     MyProxy* _proxy;
@@ -45,5 +48,6 @@ private:
 
     QString _currentFolder;
     QList<QWidget*> _extraButtons;
+    QTranslator* _translator;
 };
 #endif// MAINWINDOW_H
