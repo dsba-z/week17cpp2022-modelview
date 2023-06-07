@@ -3,6 +3,7 @@
 
 #include "examplemodel.h"
 #include <QMainWindow>
+#include <QSortFilterProxyModel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -23,7 +24,11 @@ private:
     Ui::MainWindow* ui;
 
     ExampleModel* _model;
+    QSortFilterProxyModel* _proxy;
+
 private slots:
     void openFile();
+    void on_addNewRowButton_clicked();
+
 };
 #endif// MAINWINDOW_H
