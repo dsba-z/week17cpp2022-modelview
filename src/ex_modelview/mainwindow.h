@@ -3,7 +3,7 @@
 
 #include "examplemodel.h"
 #include <QMainWindow>
-#include <QSortFilterProxyModel>
+#include "myproxy.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -24,7 +24,7 @@ private:
     Ui::MainWindow* ui;
 
     ExampleModel* _model;
-    QSortFilterProxyModel* _proxy;
+    MyProxy* _proxy;
 
 private slots:
     void openFile();

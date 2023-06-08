@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     _model = new ExampleModel();
-    _proxy = new QSortFilterProxyModel();
+    _proxy = new MyProxy();
     ui->setupUi(this);
 
     _proxy->setSourceModel(_model);
@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableView->setSortingEnabled(true);
 
     QObject::connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFile);
+    // QObject::connect(ui->slider, &QSlider::valueChanged, this, &MainWindow::changeMaxFilter);
 
 }
 
@@ -29,6 +30,11 @@ void MainWindow::openFile()
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), ".", "*.csv");
     _model->loadDataFromFile(fileName);
 }
+
+// void setFilterSlot(int value)
+// {
+//     _proxy->setFilter(value);
+// }
 
 
 void MainWindow::on_addNewRowButton_clicked()
